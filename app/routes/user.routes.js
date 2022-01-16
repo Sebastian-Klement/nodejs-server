@@ -1,4 +1,3 @@
-const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
 
 module.exports = (app) => {
@@ -14,5 +13,5 @@ module.exports = (app) => {
 
   app.get("/alluser", controller.allUser);
 
-  app.get("/home", [authJwt.verifyToken]);
+  app.get("/allmedium", controller.allMedium);
 };

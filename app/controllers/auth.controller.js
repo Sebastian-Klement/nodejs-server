@@ -2,11 +2,9 @@ const mysqlConnection = require("../config/config.database");
 const config = require("../config/auth.config");
 const jwt = require("jsonwebtoken");
 const { validationResult, check } = require("express-validator");
-const { mail } = require("../middleware");
-const { detect } = require("../middleware");
+const { mail, detect } = require("../middleware");
 
 exports.signin = async (request, response) => {
-  
   mail.sentSafetyMail();
   detect.detect(request.headers["user-agent"]);
 
@@ -53,7 +51,6 @@ exports.signin = async (request, response) => {
       console.error("error: " + error.message);
     }
   }
-  // }
 };
 
 exports.checkToken = async (request, response) => {
@@ -75,7 +72,7 @@ exports.checkToken = async (request, response) => {
 };
 
 exports.loginValidate = [
-  check("username", "Username Must Be an Email Address").trim().escape(),
+  check("username", "Username Must Be an name with a number").trim().escape(),
   check("userpassword")
     .isLength({ min: 3 })
     .withMessage("Password Must Be at Least 8 Characters")
