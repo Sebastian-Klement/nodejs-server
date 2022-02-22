@@ -1,6 +1,32 @@
 const { request, response } = require("express");
 const mysqlConnection = require("../config/config.database");
 
+//Idee einer möglichen Vaöidierung des Studentenausweis 
+// exports.validator = async (request, response) => {
+//   try {
+//     mysqlConnection.query(
+//       "SELECT * FROM user WHERE username = ?",
+//       [request.body.username],
+//       (error, results, fields) => {
+//         if (error) {
+//           console.error("error: " + error);
+//           return;
+//         }
+//         if (request.body.username === results[0].username) {
+//           response.status(200).send({
+//             username: results[0].username,
+//             text: "isValide",
+//           });
+//         } else {
+//           response.status(400).send("Upps ... Invalid studentcard");
+//         }
+//       }
+//     );
+//   } catch (error) {
+//     console.error("error: " + error.message);
+//   }
+// };
+
 exports.allUser = async (request, response) => {
   mysqlConnection.query("SELECT * FROM user", (error, results, fields) => {
     if (!error) {
