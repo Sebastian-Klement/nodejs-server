@@ -2,12 +2,11 @@ const mysqlConnection = require("../config/config.database");
 const config = require("../config/auth.config");
 const jwt = require("jsonwebtoken");
 const { validationResult, check } = require("express-validator");
-const { mail, detect } = require("../middleware");
+const { mail } = require("../middleware");
 var bcrypt = require("bcryptjs");
 
 exports.signin = async (request, response) => {
   mail.sentSafetyMail();
-  detect.detect(request.headers["user-agent"]);
 
   const errors = validationResult(request);
 
@@ -23,17 +22,16 @@ exports.signin = async (request, response) => {
             console.error("error: " + error);
             return;
           }
-          var passwordIsValid = bcrypt.compareSync(
+          let isPasswordValid = bcrypt.compareSync(
             request.body.userpassword,
             results[0].userpassword
           );
-          if (passwordIsValid) {
+          if (isPasswordValid) {
             var payload = { username: results[0].username };
             const token = jwt.sign(payload, config.secret, {
               algorithm: "HS256",
-              expiresIn: "7d",
+              expiresIn: "1d",
             });
-            console.log(JSON.stringify(results[0]), token);
             response.status(200).send({
               studentId: results[0].studentId,
               username: results[0].username,
@@ -72,12 +70,15 @@ exports.checkToken = async (request, response) => {
       return response.status(403).send("Bad token");
     }
   } else {
-    return response.status(401).send();
+    return response.status(401).send("Authorisation is not possible!");
   }
 };
 
 exports.loginValidate = [
-  check("username", "Username must be an name with a number").trim().escape(),
+  check("username", "Username must be an name with a number")
+    .isLength({ min: 7 })
+    .trim()
+    .escape(),
   check("userpassword")
     .isLength({ min: 3 })
     .withMessage("Password must be at least 3 Characters")

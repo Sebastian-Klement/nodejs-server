@@ -11,7 +11,7 @@ app.get("/", async (request, response) => {
   var clientIp = requestIp.getClientIp(request);
   console.log(clientIp);
   response.json({
-    message: "Welcome to my application.",
+    message: "Welcome to my app user: " + clientIp + " !",
   });
 });
 
