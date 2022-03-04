@@ -1,4 +1,5 @@
-const controller = require("../controllers/user.controller");
+const userController = require("../controllers/user.controller");
+const authController = require("../controllers/auth.controller");
 
 module.exports = (app) => {
   app.use((request, response, next) => {
@@ -11,7 +12,7 @@ module.exports = (app) => {
     next();
   });
 
-  app.get("/alluser", controller.allUser);
+  app.get("/alluser", userController.allUser);
 
-  app.get("/allmedium", controller.allMedium);
+  app.get("/allmedium", authController.checkToken, userController.allMedium);
 };

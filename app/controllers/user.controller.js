@@ -1,7 +1,7 @@
 const { request, response } = require("express");
 const mysqlConnection = require("../config/config.database");
 
-//Idee einer möglichen Vaöidierung des Studentenausweis 
+//Idee einer möglichen Vaöidierung des Studentenausweis
 // exports.validator = async (request, response) => {
 //   try {
 //     mysqlConnection.query(
@@ -48,11 +48,11 @@ exports.allMedium = async (request, response) => {
           return;
         }
         if (request.body.studentId === results[0].studentId) {
-          response.status(200).send({
-            studentId: results[0].studentId,
+          response.status(202).send({
             title: results[0].title,
             author: results[0].author,
             isbn: results[0].isbn,
+            timestamp: results[0].timestamp,
           });
         } else {
           response.status(400).send("Upps ... Invalid studentId");

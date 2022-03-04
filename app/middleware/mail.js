@@ -8,14 +8,14 @@ exports.sentSafetyMail = function () {
     port: 587,
     secure: false,
     auth: {
-      user: "s.klement1@gmx.de",
-      pass: "123Gmx12300!",
+      user: "Your email",
+      pass: "Your pw",
     },
   });
 
   const mailData = {
-    from: "s.klement1@gmx.de",
-    to: "klementse76573@th-nuernberg.de",
+    from: "Your email",
+    to: "Your secound email",
     subject: "studentcard safety report",
     text:
       "A new device with the ip-adress: " +
